@@ -1,43 +1,1164 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study - Grade 6-11 Short Notes & Papers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #1a202c;
+            --light: #f7fafc;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+        }
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+        body {
+            font-family: 'Noto Sans Sinhala', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+        .bg-animation .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite;
+        }
 
-jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+        .bg-animation .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-animation .circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .bg-animation .circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .bg-animation .circle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .bg-animation .circle:nth-child(5) {
+            width: 90px;
+            height: 90px;
+            left: 90%;
+            animation-delay: 8s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Grade Cards */
+        .grades-section {
+            padding: 2rem 0 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .grades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .grade-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grade-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .grade-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+
+        .grade-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grade-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .grade-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .grade-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .subject-btn {
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subject-btn:hover {
+            border-color: var(--primary);
+            background: #f7fafc;
+            transform: translateX(5px);
+        }
+
+        .subject-btn i {
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .content-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            color: #666;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .download-list {
+            list-style: none;
+        }
+
+        .download-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.3s;
+        }
+
+        .download-item:hover {
+            background: #f7fafc;
+        }
+
+        .download-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: #fee;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--danger);
+        }
+
+        .file-icon.pdf {
+            background: #fee;
+            color: #e53e3e;
+        }
+
+        .file-icon.doc {
+            background: #e6f3ff;
+            color: #3182ce;
+        }
+
+        .file-details h4 {
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .file-details p {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .download-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-section p, .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #2d3748;
+            color: #718096;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .grades-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10px;
+                max-height: 95vh;
+            }
+
+            .content-tabs {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3000;
+        }
+
+        .loader.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            z-index: 3000;
+            animation: slideInRight 0.3s;
+        }
+
+        .notification.show {
+            display: flex;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification i {
+            color: var(--success);
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Smart Study</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">මුල් පිටුව</a></li>
+                    <li><a href="#grades">පන්ති</a></li>
+                    <li><a href="#subjects">විෂයන්</a></li>
+                    <li><a href="#papers">ප්‍රශ්න පත්‍ර</a></li>
+                    <li><a href="#contact">සම්බන්ධතා</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>සාර්ථක අධ්‍යාපනයක් සඳහා</h1>
+            <p>Grade 6-11 සියලු විෂයන් සඳහා කෙටි සටහන්, ප්‍රශ්න පත්‍ර සහ ආදර්ශ ප්‍රශ්න පත්‍ර</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="විෂය හෝ පන්තිය සොයන්න..." id="searchInput">
+                <button class="search-btn" onclick="searchContent()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="statSubjects">15+</div>
+                    <div class="stat-label">විෂයන්</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statNotes">500+</div>
+                    <div class="stat-label">කෙටි සටහන්</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statPapers">1000+</div>
+                    <div class="stat-label">ප්‍රශ්න පත්‍ර</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statStudents">50K+</div>
+                    <div class="stat-label">සිසුන්</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grades Section -->
+    <section class="grades-section" id="grades">
+        <div class="container">
+            <h2 class="section-title">පන්ති තෝරන්න</h2>
+            <div class="grades-grid" id="gradesContainer">
+                <!-- Grade cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Smart Study</h3>
+                    <p>ශ්‍රී ලාංකික සිසුන් සඳහා ගුණාත්මක අධ්‍යාපනික ද්‍රව්‍ය ලබා දීම අපගේ ප්‍රධාන ඉලක්කයයි.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>ඉක්මන් සබැඳි</h3>
+                    <p><a href="#">මුල් පිටුව</a></p>
+                    <p><a href="#">කෙටි සටහන්</a></p>
+                    <p><a href="#">ප්‍රශ්න පත්‍ර</a></p>
+                    <p><a href="#">ආදර්ශ ප්‍රශ්න පත්‍ර</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>සම්බන්ධතා</h3>
+                    <p><i class="fas fa-envelope"></i> info@smartstudy.lk</p>
+                    <p><i class="fas fa-phone"></i> +94 11 234 5678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> කොළඹ, ශ්‍රී ලංකාව</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Smart Study. සියලු හිමිකම් ඇවිරිණි.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="subjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">විෂය තෝරන්න</h2>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="content-tabs">
+                    <button class="tab-btn active" onclick="switchTab('notes')">කෙටි සටහන්</button>
+                    <button class="tab-btn" onclick="switchTab('papers')">ප්‍රශ්න පත්‍ර</button>
+                    <button class="tab-btn" onclick="switchTab('model')">ආදර්ශ ප්‍රශ්න පත්‍ර</button>
+                </div>
+                
+                <div id="notes" class="tab-content active">
+                    <ul class="download-list" id="notesList">
+                        <!-- Content generated by JS -->
+                    </ul>
+                </div>
+                
+                <div id="papers" class="tab-content">
+                    <ul class="download-list" id="papersList">
+                        <!-- Content generated by JS -->
+                    </ul>
+                </div>
+                
+                <div id="model" class="tab-content">
+                    <ul class="download-list" id="modelList">
+                        <!-- Content generated by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification success" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>භාගත කිරීම ආරම්භ විය!</span>
+    </div>
+
+    <script>
+        // Data Structure
+        const gradesData = [
+            {
+                grade: 6,
+                title: "Grade 6",
+                subtitle: "6 ශ්‍රේණිය",
+                subjects: ["ගණිතය", "විද්‍යාව", "ඉංග්‍රීසි", "සිංහල", "ඉතිහාසය", "ආගම"]
+            },
+            {
+                grade: 7,
+                title: "Grade 7",
+                subtitle: "7 ශ්‍රේණිය",
+                subjects: ["ගණිතය", "විද්‍යාව", "ඉංග්‍රීසි", "සිංහල", "ඉතිහාසය", "භූගෝල විද්‍යාව"]
+            },
+            {
+                grade: 8,
+                title: "Grade 8",
+                subtitle: "8 ශ්‍රේණිය",
+                subjects: ["ගණිතය", "විද්‍යාව", "ඉංග්‍රීසි", "සිංහල", "ඉතිහාසය", "ප්‍රාචීන ශිෂ්ටාචාර"]
+            },
+            {
+                grade: 9,
+                title: "Grade 9",
+                subtitle: "9 ශ්‍රේණිය",
+                subjects: ["ගණිතය", "විද්‍යාව", "ඉංග්‍රීසි", "සිංහල", "ඉතිහාසය", "නිවර්තන කෘෂිකර්මය"]
+            },
+            {
+                grade: 10,
+                title: "Grade 10",
+                subtitle: "10 ශ්‍රේණිය (සා.පෙළ)",
+                subjects: ["ගණිතය", "විද්‍යාව", "ඉංග්‍රීසි", "සිංහල", "ඉතිහාසය", "ව්‍යාපාර අධ්‍යයනය"]
+            },
+            {
+                grade: 11,
+                title: "Grade 11",
+                subtitle: "11 ශ්‍රේණිය (සා.පෙළ)",
+                subjects: ["ගණිතය", "විද්‍යාව", "ඉංග්‍රීසි", "සිංහල", "ඉතිහාසය", "තොරතුරු තාක්ෂණය"]
+            }
+        ];
+
+        const subjectIcons = {
+            "ගණිතය": "fa-calculator",
+            "විද්‍යාව": "fa-flask",
+            "ඉංග්‍රීසි": "fa-language",
+            "සිංහල": "fa-book",
+            "ඉතිහාසය": "fa-landmark",
+            "ආගම": "fa-praying-hands",
+            "භූගෝල විද්‍යාව": "fa-globe",
+            "ප්‍රාචීන ශිෂ්ටාචාර": "fa-monument",
+            "නිවර්තන කෘෂිකර්මය": "fa-seedling",
+            "ව්‍යාපාර අධ්‍යයනය": "fa-briefcase",
+            "තොරතුරු තාක්ෂණය": "fa-laptop-code"
+        };
+
+        // Generate Grade Cards
+        function generateGradeCards() {
+            const container = document.getElementById('gradesContainer');
+            
+            gradesData.forEach((grade, index) => {
+                const card = document.createElement('div');
+                card.className = 'grade-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animation = 'fadeInUp 0.6s ease both';
+                
+                let subjectsHTML = '';
+                grade.subjects.forEach(subject => {
+                    const icon = subjectIcons[subject] || 'fa-book';
+                    subjectsHTML += `
+                        <button class="subject-btn" onclick="openSubjectModal('${grade.grade}', '${subject}')">
+                            <i class="fas ${icon}"></i>
+                            ${subject}
+                        </button>
+                    `;
+                });
+                
+                card.innerHTML = `
+                    <div class="grade-header">
+                        <div class="grade-icon">${grade.grade}</div>
+                        <div>
+                            <div class="grade-title">${grade.title}</div>
+                            <div class="grade-subtitle">${grade.subtitle}</div>
+                        </div>
+                    </div>
+                    <div class="subjects-grid">
+                        ${subjectsHTML}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Modal Functions
+        function openSubjectModal(grade, subject) {
+            const modal = document.getElementById('subjectModal');
+            const title = document.getElementById('modalTitle');
+            title.textContent = `Grade ${grade} - ${subject}`;
+            
+            // Generate sample content
+            generateModalContent(grade, subject);
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('subjectModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function generateModalContent(grade, subject) {
+            // Generate Notes
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = generateDownloadItems([
+                { name: `${subject} - 1 වන පාඩම`, type: 'pdf', size: '2.5 MB' },
+                { name: `${subject} - 2 වන පාඩම`, type: 'pdf', size: '3.1 MB' },
+                { name: `${subject} - 3 වන පාඩම`, type: 'pdf', size: '1.8 MB' },
+                { name: `${subject} - සමස්ත කෙටි සටහන්`, type: 'pdf', size: '5.2 MB' }
+            ]);
+
+            // Generate Papers
+            const papersList = document.getElementById('papersList');
+            papersList.innerHTML = generateDownloadItems([
+                { name: `2019 වාර පරීක්ෂණය - ${subject}`, type: 'pdf', size: '1.2 MB' },
+                { name: `2020 වාර පරීක්ෂණය - ${subject}`, type: 'pdf', size: '1.5 MB' },
+                { name: `2021 වාර පරීක්ෂණය - ${subject}`, type: 'pdf', size: '1.3 MB' },
+                { name: `2022 වාර පරීක්ෂණය - ${subject}`, type: 'pdf', size: '1.4 MB' }
+            ]);
+
+            // Generate Model Papers
+            const modelList = document.getElementById('modelList');
+            modelList.innerHTML = generateDownloadItems([
+                { name: `ආදර්ශ ප්‍රශ්න පත්‍ර 1 - ${subject}`, type: 'pdf', size: '2.1 MB' },
+                { name: `ආදර්ශ ප්‍රශ්න පත්‍ර 2 - ${subject}`, type: 'pdf', size: '2.3 MB' },
+                { name: `ආදර්ශ ප්‍රශ්න පත්‍ර 3 - ${subject}`, type: 'pdf', size: '2.0 MB' }
+            ]);
+        }
+
+        function generateDownloadItems(items) {
+            return items.map(item => `
+                <li class="download-item">
+                    <div class="download-info">
+                        <div class="file-icon ${item.type}">
+                            <i class="fas fa-file-${item.type}"></i>
+                        </div>
+                        <div class="file-details">
+                            <h4>${item.name}</h4>
+                            <p>${item.type.toUpperCase()} • ${item.size}</p>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="downloadFile('${item.name}')">
+                        <i class="fas fa-download"></i>
+                        බාගත කරන්න
+                    </button>
+                </li>
+            `).join('');
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Download Simulation
+        function downloadFile(filename) {
+            const notification = document.getElementById('notification');
+            const loader = document.getElementById('loader');
+            
+            loader.classList.add('active');
+            
+            setTimeout(() => {
+                loader.classList.remove('active');
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }, 1500);
+        }
+
+        // Search Function
+        function searchContent() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.grade-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search on Enter
+        document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchContent();
+            }
+        });
+
+        // Close modal on outside click
+        document.getElementById('subjectModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Animate stats on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = target + '+';
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current);
+                    }
+                }, 30);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generateGradeCards();
+            
+            // Intersection Observer for stats animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu')?.addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+  </html>                        
